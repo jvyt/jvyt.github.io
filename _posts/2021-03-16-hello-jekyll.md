@@ -1,216 +1,285 @@
 ---
 layout: post
-title: Activity - Getting Started with Jekyll
+title: Blog Post 1
 ---
 
-In this post, we'll get set up with [Jekyll](https://jekyllrb.com/). Jekyll is a *static site converter*, which you can use to turn plaintext documents into attractive webpages. 
+# Interactive Data Graphics
+## Introduction
+Hiya! Welcome to another blog post! In this post we will be creating several interactive data graphics to analyze certain global warming data.
 
+    Just like in blog post 0, let's start off by importing the necessary Python 
+    libraries using the appropriate. sqlite3 is a module used to create, 
+    manipulate, and query databases. LinearRegression is to fit a linear model. 
+    plotly is a graphing library that makes interactive, publication-quality 
+    graphs.
 
-## Pre-Work: Install Jekyll
-
-You should have already installed Jekyll when completing the activity in [this post]({{ site.baseurl }}/software)
 
 ```python
-def f(x):
-    2*x
-
-```
-**To get the most out of this activity, you should install Jekyll ahead of time.** In case you haven't yet, there are two steps: 
-
-- Install Ruby. 
-- Install Jekyll. 
-
-If you are on [macOS](https://jekyllrb.com/docs/installation/macos/), [Ubuntu](https://jekyllrb.com/docs/installation/ubuntu/), or [another Linux distribution](https://jekyllrb.com/docs/installation/other-linux/), these steps should be relatively simple. If you are on [Windows](https://jekyllrb.com/docs/installation/windows/), installation might be slightly more complex. We recommend using the instructions under "Installation via Bash on Windows 10."
-
-## Optional Pre-Work: Install a Text Editor
-
-Text editors allow you to make modifications to plaintext files. They are useful for coding, writing, and any other tasks that require the manipulation of plaintext. 
-
-Jupyter Lab, which you may have used before, includes some basic text editor capabilities. You might, however, have a better experience with a dedicated text editor program. [Visual Studio Code](https://code.visualstudio.com/) is my personal choice. [Sublime Text](https://www.sublimetext.com/) and [Atom](https://atom.io/) are also popular. Beyond this course, if you expect to write a significant amount of code in your career then it is worthwhile to find a text editor that you like. 
-
-![jekyll.png]({{ site.baseurl }}/images/jekyll-in-vscode.png)
-*Blogging with Jekyll and Visual Studio Code*.
-
-## 1. Fork this Blog
-
-Your first step is to fork the [GitHub repository](https://github.com/PIC16B/pic16b.github.io) for this blog. Although this repository contains noticeably more files than the one we [practiced with](https://github.com/PIC16B/git-practice), the process of forking is almost exactly the same. Just click the "Fork" button on the top right of the GitHub page. 
-
-There's a small additional point this time. After you fork the repository, go to Settings and chang the repository name to 
-
-```
-[your GitHub username].github.io
-```
-
-For example, my username is `PhilChodrow`, and so I would rename the repository to `PhilChodrow.github.io`. 
-
-Congrats! You now have all the files you need to create your personal blog. 
-
-## 2. Publish Your Blog
-
-Now, go Settings again, and scroll down until you see the GitHub Pages section. Publish your blog! Don't modify any of the other settings. 
-
-Wait a few minutes, and then navigate to 
-
-```
-https://[your username].github.io/
-```
-
-If you see a webpage there, congrats! Your blog is up and running. At the moment, it's just a copy of the template, so it's not personalized in any way. 
-
-
-## 3. Clone Your New Blog
-
-Your next step is to clone your blog. Make sure that you clone *your* blog (the fork that you just created) and not the original template. 
-
-Although this repository contains noticeably more files than the one we [practiced with](https://github.com/PIC16B/git-practice), the process of cloning works in exactly the same way: 
-
-1. Click the big green Code download button. 
-2. Choose "Open with GitHub Desktop."
-3. Wait a moment for the files to download. 
-
-## 4. Look Around
-
-Open up the repository that you just cloned in a file explorer, and take a look around. It should look something like this: 
-
-```bash
-[username].github.io
-├── _includes/
-├── _layouts/
-├── _posts/
-├── _sass/
-├── _site/
-├── images/
-├── notebooks/
-├── 404.md
-├── CNAME
-├── LICENSE
-├── README.md
-├── _config.yml
-├── about.md
-├── index.html
-└── style.scss
-```
-
-You won't need to touch most of these files, but we'll soon take a quick tour. 
-
-## 5. Serve Your Blog Locally
-
-Serving your blog locally allows you to preview what your site will look like before you place it online. This is what we actually need Jekyll for. 
-
-Open up a terminal or command line, and navigate to the location where you cloned your website. The easiest way to do this is actually via GitHub Desktop: go to Repository -> Open in Terminal. You can also navigate manually using the `cd` command if you are already comfortable with the command line. 
-
-Once you're in the right place, type the command 
-
-```bash
-jekyll serve
-```
-
-You'll need to wait a few seconds. Eventually, you should see the following two lines in the terminal: 
-
-```
-Server address: http://127.0.0.1:4000/
-Server running... press ctrl-c to stop.
-```
-
-Navigate to `http://127.0.0.1:4000/` in your browser. You should see an exact copy of the blog! This copy isn't online; it's running directly on your computer. This allows you to (a) preview changes more rapidly than you can by editing on GitHub and (b) work on your blog using a text editor, which is usually more comfortable than the file modification interface on GitHub. 
-
-**Note**: You may experience an error message telling you that `webrick` is missing. If you do, try running the following command in your terminal: 
-
-```bash
-gem add webrick
-```
-
-Then, try 
-
-```bash
-jekyll serve
-```
-
-again. 
-
-## 6. Add Your Name
-
-Still on GitHub, find the file `_config.yml`. Click the pencil icon to edit the file. Change the `name` and `description` fields. Anything is fine! You're encouraged but not required to use your real name. 
-
-In a few moments, your website will update with the new information. Now it's yours! 
-
-For now, move on to the next step. 
-
-
-## 7. Make a Post
-
-*Starting with this step, it is a good idea to commit each time you make a significant addition to your site.*
-
-Create a file called `2021-04-01-test-post.md` in the `_posts` directory. Open the file in a text editor, and add the following text at the top of the post: 
-
-```m
----
-layout: post
-title: My First Post!! 
----
-```
-
-Next, add some text. Any text will do: 
-
-```
-I'm an awesome PIC16B student and I am running Jekyll! 
-```
-
-Now, in your browser, navigate to your homepage (http://127.0.0.1:4000/). You should see a new blog post with title "My First Post" appear on the local version of your site. Click into it and observe that the text you added is now there. 
-
-## 8. Modify Your Post 
-
-1. Try making a header: 
-```m
-### Third level header (number of # controls level)
-```
-2. Try making a numbered or bulleted list. 
-3. Try adding math! If you are familiar with the $$\LaTeX$$ typesetting system, you can use many standard commands by enclosing them in double \$ symbols. For example, ```$$f(x) = e^x$$``` will be rendered as $$f(x) = e^x$$. 
-4. Add code! When talking about a short concept, like the `np.random.rand()` function, you can type back ticks like this: \``np.random.rand()`\` and just incorporate it into a paragraph of text.  To create a larger block of code, use three consecutive backticks ``` to both open and close the code block. If you place the word `python` immediately after the opening code blocks, you'll get attractive syntax highlighting: 
-```python
-def f(x):
-    """
-    A cool function that multiples an input x by 2. 
-    """
-    return 2*x
-``` 
-5. To display code *output*, leave off the `python` syntax highlighting in order to distinguish between code and code output, which is usually not highlighted: 
-```python
-print("to boldly go")
-```
-```
-to boldly go
-```
-
-## 9. Images 
-
-You can and should include images in your posts, especially in cases where you have created a data visualization. If the image is already available online, you can link to it using the syntax `![](image_url)`: 
-
-![](https://s3.amazonaws.com/media.eremedia.com/wp-content/uploads/2017/09/13112109/diversity-700x439.jpg)
-
-In cases in which your code produces an image, you should save the image (such as via `plt.savefig()`), then save it in the `images` directory. You can then embed it directly under the code that generates it on your blog post, using the code 
-```
-![image-example.png]({{ site.baseurl }}/images/image-example.png)
-```
-For example, here's how to show code along with the plot that it generates. 
-```python
-import numpy as np
+import pandas as pd
 from matplotlib import pyplot as plt
-x = np.linspace(0, 2*np.pi, 1001)
-y = np.sin(x)
-plt.plot(x, y)
+import numpy as np
+import sqlite3
+
+from sklearn.linear_model import LinearRegression
+from plotly import express as px
 ```
-![image-example.png]({{ site.baseurl }}/images/image-example.png)
 
-To create this example, I first ran the code in a Jupyter Notebook, and added the line `plt.savefig("image-example.png")` to save the result. I then moved the file `image-example.png` to the `images/` directory of my blog. Finally, I added the line 
+ ## `Creating and Populating a Database`
+ 
+    To use the sqlite3 module, we need to start by creating a Connection 
+    object that represents the database. Here the data will be stored in 
+    the climate.db file.
+
+
+```python
+conn = sqlite3.connect("climate.db")
 ```
-![image-example.png]({{ site.baseurl }}/images/image-example.png)
+
+
+```python
+df_iter = pd.read_csv("temps.csv", chunksize = 100000)
+stations = pd.read_csv("station-metadata.csv")
+countries = pd.read_csv("countries.csv")
+
+df = df_iter.__next__()
 ```
-immediately beneath the code block. 
 
 
-## 10. Push! 
+```python
+def prepare_df(df):
+    df["FIPS 10-4"] = df["ID"].str[0:2]
+    df = df.set_index(keys=["ID", "Year", "FIPS 10-4"])
+    df = df.stack()
+    df = df.reset_index()
+    df = df.rename(columns = {"level_3"  : "Month" , 0 : "Temp"})
+    df["Month"] = df["Month"].str[5:].astype(int)
+    df["Temp"]  = df["Temp"] / 100
+    return(df)
+```
 
-Once you've made all these additions to your test post, publish the result. To do so, make sure you have committed all your changes in GitHub Desktop, including any files you may have added. Once you've done so, push! In a few minutes, you should see your new post on your website. 
+
+```python
+df = prepare_df(df)
+df.to_sql("temperatures", conn, if_exists = "replace", index = False)
+
+df_iter = pd.read_csv("temps.csv", chunksize = 100000)
+for df in df_iter:
+    df = prepare_df(df)
+    df.to_sql("temperatures", conn, if_exists = "replace", index = False)
+```
+
+    /opt/anaconda3/envs/PIC16B/lib/python3.8/site-packages/pandas/core/generic.py:2872: UserWarning: The spaces in these column names will not be changed. In pandas versions < 0.14, spaces were converted to underscores.
+      sql.to_sql(
 
 
+
+```python
+stations.to_sql("stations", conn, if_exists = "replace", index = False)
+countries.to_sql("countries", conn, if_exists = "replace", index = False)
+```
+
+## `Queries`
+
+
+```python
+cursor = conn.cursor()
+cursor.execute("SELECT name FROM sqlite_master WHERE type='table'")
+print(cursor.fetchall())
+```
+
+    [('temperatures',), ('stations',), ('countries',)]
+
+
+
+```python
+def query_climate_database(country, year_begin, year_end, month):
+    cmd = \
+    """
+    SELECT S.name, S.latitude, S.longitude, C.name, T.year, T.month, T.temp
+    FROM temperatures T
+    INNER JOIN stations S ON T.id = S.id 
+    INNER JOIN countries C ON T.[FIPS 10-4] = C.[FIPS 10-4]
+    WHERE C.name = country AND (T.year >= year_begin OR T.year <= year_end) AND T.month = month
+    """
+    
+    df = pd.read_sql_query(cmd, conn)
+    
+    return df
+```
+
+
+```python
+#test function
+query_climate_database(country = "India", 
+                       year_begin = 1980, 
+                       year_end = 2020,
+                       month = 1)
+```
+
+
+    ---------------------------------------------------------------------------
+
+    OperationalError                          Traceback (most recent call last)
+
+    /opt/anaconda3/envs/PIC16B/lib/python3.8/site-packages/pandas/io/sql.py in execute(self, *args, **kwargs)
+       2055         try:
+    -> 2056             cur.execute(*args, **kwargs)
+       2057             return cur
+
+
+    OperationalError: no such column: country
+
+    
+    The above exception was the direct cause of the following exception:
+
+
+    DatabaseError                             Traceback (most recent call last)
+
+    /var/folders/q6/10s9dnt11c37jlcj336y9r9h0000gn/T/ipykernel_51741/3060603923.py in <module>
+          1 #test function
+    ----> 2 query_climate_database(country = "India", 
+          3                        year_begin = 1980,
+          4                        year_end = 2020,
+          5                        month = 1)
+
+
+    /var/folders/q6/10s9dnt11c37jlcj336y9r9h0000gn/T/ipykernel_51741/3688955949.py in query_climate_database(country, year_begin, year_end, month)
+          9     """
+         10 
+    ---> 11     df = pd.read_sql_query(cmd, conn)
+         12 
+         13     return df
+
+
+    /opt/anaconda3/envs/PIC16B/lib/python3.8/site-packages/pandas/io/sql.py in read_sql_query(sql, con, index_col, coerce_float, params, parse_dates, chunksize, dtype)
+        434     """
+        435     pandas_sql = pandasSQL_builder(con)
+    --> 436     return pandas_sql.read_query(
+        437         sql,
+        438         index_col=index_col,
+
+
+    /opt/anaconda3/envs/PIC16B/lib/python3.8/site-packages/pandas/io/sql.py in read_query(self, sql, index_col, coerce_float, params, parse_dates, chunksize, dtype)
+       2114 
+       2115         args = _convert_params(sql, params)
+    -> 2116         cursor = self.execute(*args)
+       2117         columns = [col_desc[0] for col_desc in cursor.description]
+       2118 
+
+
+    /opt/anaconda3/envs/PIC16B/lib/python3.8/site-packages/pandas/io/sql.py in execute(self, *args, **kwargs)
+       2066 
+       2067             ex = DatabaseError(f"Execution failed on sql '{args[0]}': {exc}")
+    -> 2068             raise ex from exc
+       2069 
+       2070     @staticmethod
+
+
+    DatabaseError: Execution failed on sql '
+        SELECT S.name, S.latitude, S.longitude, C.name, T.year, T.month, T.temp
+        FROM temperatures T
+        INNER JOIN stations S ON T.id = S.id 
+        INNER JOIN countries C ON T.[FIPS 10-4] = C.[FIPS 10-4]
+        WHERE C.name = country AND (T.year >= year_begin OR T.year <= year_end) AND T.month = month
+        ': no such column: country
+
+
+## `Geographic Data Visualization`
+
+
+```python
+def temperature_coefficient_plot(country, year_begin, year_end, month, min_obs, **kwargs):
+
+    def coef(data_group):
+        x = data_group[["Year"]] # 2 brackets because X should be a df
+        y = data_group["Temp"]   # 1 bracket because y should be a series
+        LR = LinearRegression()
+        LR.fit(x, y)
+        return LR.coef_[0]
+    
+    coefs = df.groupby(["NAME", "Month"]).apply(coef)
+
+    coefs = coefs.reset_index()
+    
+    coords = pd.DataFrame({
+    "lon" : [-118.44300984639733], 
+    "lat" : [34.0696449790177]
+    })
+    
+    fig = px.scatter_mapbox(coords, 
+                        lat = "lat",
+                        lon = "lon",
+                        zoom = 15,
+                        height = 300,
+                        mapbox_style="open-street-map")
+
+    fig.update_layout(margin={"r":0,"t":0,"l":0,"b":0})
+```
+
+
+```python
+# test function
+# assumes you have imported necessary packages
+color_map = px.colors.diverging.RdGy_r # choose a colormap
+
+fig = temperature_coefficient_plot("India", 1980, 2020, 1, 
+                                   min_obs = 10,
+                                   zoom = 2,
+                                   mapbox_style="carto-positron",
+                                   color_continuous_scale=color_map)
+
+fig.show()
+```
+
+
+    ---------------------------------------------------------------------------
+
+    KeyError                                  Traceback (most recent call last)
+
+    /var/folders/q6/10s9dnt11c37jlcj336y9r9h0000gn/T/ipykernel_51741/482935465.py in <module>
+          3 color_map = px.colors.diverging.RdGy_r # choose a colormap
+          4 
+    ----> 5 fig = temperature_coefficient_plot("India", 1980, 2020, 1, 
+          6                                    min_obs = 10,
+          7                                    zoom = 2,
+
+
+    /var/folders/q6/10s9dnt11c37jlcj336y9r9h0000gn/T/ipykernel_51741/3270307080.py in temperature_coefficient_plot(country, year_begin, year_end, month, min_obs, **kwargs)
+         10         return LR.coef_[0]
+         11 
+    ---> 12     coefs = df.groupby(["NAME", "Month"]).apply(coef)
+         13 
+         14     coefs = coefs.reset_index()
+
+
+    /opt/anaconda3/envs/PIC16B/lib/python3.8/site-packages/pandas/core/frame.py in groupby(self, by, axis, level, as_index, sort, group_keys, squeeze, observed, dropna)
+       7629         # error: Argument "squeeze" to "DataFrameGroupBy" has incompatible type
+       7630         # "Union[bool, NoDefault]"; expected "bool"
+    -> 7631         return DataFrameGroupBy(
+       7632             obj=self,
+       7633             keys=by,
+
+
+    /opt/anaconda3/envs/PIC16B/lib/python3.8/site-packages/pandas/core/groupby/groupby.py in __init__(self, obj, keys, axis, level, grouper, exclusions, selection, as_index, sort, group_keys, squeeze, observed, mutated, dropna)
+        887             from pandas.core.groupby.grouper import get_grouper
+        888 
+    --> 889             grouper, exclusions, obj = get_grouper(
+        890                 obj,
+        891                 keys,
+
+
+    /opt/anaconda3/envs/PIC16B/lib/python3.8/site-packages/pandas/core/groupby/grouper.py in get_grouper(obj, key, axis, level, sort, observed, mutated, validate, dropna)
+        860                 in_axis, level, gpr = False, gpr, None
+        861             else:
+    --> 862                 raise KeyError(gpr)
+        863         elif isinstance(gpr, Grouper) and gpr.key is not None:
+        864             # Add key to exclusions
+
+
+    KeyError: 'NAME'
+
+
+
+```python
+conn.close()   #close database connection
+```
