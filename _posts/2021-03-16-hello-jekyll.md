@@ -4,6 +4,7 @@ title: Blog Post 1
 ---
 
 # Interactive Data Graphics
+
 ## Introduction
 Hiya! Welcome to another blog post! In this post we will be creating several interactive data graphics to analyze certain global warming data.
 
@@ -35,37 +36,280 @@ from plotly import express as px
 conn = sqlite3.connect("climate.db")
 ```
 
+    Before creating a database, we need to read three files into 
+    separate dataframes. The three data sets separately contain a 
+    record of surface temperatures of atmospheric measurement stations 
+    across the globe; including country names and their internationally 
+    standardized abbreviation.
+
 
 ```python
-df_iter = pd.read_csv("temps.csv", chunksize = 100000)
+df = pd.read_csv("temps.csv")
 stations = pd.read_csv("station-metadata.csv")
 countries = pd.read_csv("countries.csv")
-
-df = df_iter.__next__()
 ```
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>ID</th>
+      <th>Year</th>
+      <th>VALUE1</th>
+      <th>VALUE2</th>
+      <th>VALUE3</th>
+      <th>VALUE4</th>
+      <th>VALUE5</th>
+      <th>VALUE6</th>
+      <th>VALUE7</th>
+      <th>VALUE8</th>
+      <th>VALUE9</th>
+      <th>VALUE10</th>
+      <th>VALUE11</th>
+      <th>VALUE12</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>ACW00011604</td>
+      <td>1961</td>
+      <td>-89.0</td>
+      <td>236.0</td>
+      <td>472.0</td>
+      <td>773.0</td>
+      <td>1128.0</td>
+      <td>1599.0</td>
+      <td>1570.0</td>
+      <td>1481.0</td>
+      <td>1413.0</td>
+      <td>1174.0</td>
+      <td>510.0</td>
+      <td>-39.0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>ACW00011604</td>
+      <td>1962</td>
+      <td>113.0</td>
+      <td>85.0</td>
+      <td>-154.0</td>
+      <td>635.0</td>
+      <td>908.0</td>
+      <td>1381.0</td>
+      <td>1510.0</td>
+      <td>1393.0</td>
+      <td>1163.0</td>
+      <td>994.0</td>
+      <td>323.0</td>
+      <td>-126.0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>ACW00011604</td>
+      <td>1963</td>
+      <td>-713.0</td>
+      <td>-553.0</td>
+      <td>-99.0</td>
+      <td>541.0</td>
+      <td>1224.0</td>
+      <td>1627.0</td>
+      <td>1620.0</td>
+      <td>1596.0</td>
+      <td>1332.0</td>
+      <td>940.0</td>
+      <td>566.0</td>
+      <td>-108.0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>ACW00011604</td>
+      <td>1964</td>
+      <td>62.0</td>
+      <td>-85.0</td>
+      <td>55.0</td>
+      <td>738.0</td>
+      <td>1219.0</td>
+      <td>1442.0</td>
+      <td>1506.0</td>
+      <td>1557.0</td>
+      <td>1221.0</td>
+      <td>788.0</td>
+      <td>546.0</td>
+      <td>112.0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>ACW00011604</td>
+      <td>1965</td>
+      <td>44.0</td>
+      <td>-105.0</td>
+      <td>38.0</td>
+      <td>590.0</td>
+      <td>987.0</td>
+      <td>1500.0</td>
+      <td>1487.0</td>
+      <td>1477.0</td>
+      <td>1377.0</td>
+      <td>974.0</td>
+      <td>31.0</td>
+      <td>-178.0</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>1359932</th>
+      <td>ZIXLT622116</td>
+      <td>1966</td>
+      <td>2180.0</td>
+      <td>2040.0</td>
+      <td>1840.0</td>
+      <td>1690.0</td>
+      <td>1430.0</td>
+      <td>1280.0</td>
+      <td>1210.0</td>
+      <td>1460.0</td>
+      <td>1770.0</td>
+      <td>1980.0</td>
+      <td>2090.0</td>
+      <td>2110.0</td>
+    </tr>
+    <tr>
+      <th>1359933</th>
+      <td>ZIXLT622116</td>
+      <td>1967</td>
+      <td>2110.0</td>
+      <td>1990.0</td>
+      <td>1890.0</td>
+      <td>1920.0</td>
+      <td>1510.0</td>
+      <td>1350.0</td>
+      <td>1100.0</td>
+      <td>1380.0</td>
+      <td>1660.0</td>
+      <td>2080.0</td>
+      <td>1990.0</td>
+      <td>1910.0</td>
+    </tr>
+    <tr>
+      <th>1359934</th>
+      <td>ZIXLT622116</td>
+      <td>1968</td>
+      <td>2180.0</td>
+      <td>2000.0</td>
+      <td>1930.0</td>
+      <td>1820.0</td>
+      <td>1560.0</td>
+      <td>1080.0</td>
+      <td>1370.0</td>
+      <td>1630.0</td>
+      <td>1760.0</td>
+      <td>2180.0</td>
+      <td>1840.0</td>
+      <td>2070.0</td>
+    </tr>
+    <tr>
+      <th>1359935</th>
+      <td>ZIXLT622116</td>
+      <td>1969</td>
+      <td>2090.0</td>
+      <td>2150.0</td>
+      <td>1950.0</td>
+      <td>1830.0</td>
+      <td>1410.0</td>
+      <td>1310.0</td>
+      <td>1160.0</td>
+      <td>1460.0</td>
+      <td>1780.0</td>
+      <td>2100.0</td>
+      <td>2040.0</td>
+      <td>1910.0</td>
+    </tr>
+    <tr>
+      <th>1359936</th>
+      <td>ZIXLT622116</td>
+      <td>1970</td>
+      <td>2070.0</td>
+      <td>1990.0</td>
+      <td>1930.0</td>
+      <td>1720.0</td>
+      <td>1560.0</td>
+      <td>1330.0</td>
+      <td>1330.0</td>
+      <td>1540.0</td>
+      <td>2040.0</td>
+      <td>2030.0</td>
+      <td>2130.0</td>
+      <td>2150.0</td>
+    </tr>
+  </tbody>
+</table>
+<p>1359937 rows × 14 columns</p>
+</div>
+
+
+
+    Let's create a function to clean up the created dataframes before 
+    incorporating the data into a database.
 
 
 ```python
 def prepare_df(df):
-    df["FIPS 10-4"] = df["ID"].str[0:2]
+    """
+    Returns cleaned dataframe
+    
+    Parmeter:
+        df: dataframe
+    """
+    
+    
+    df["FIPS 10-4"] = df["ID"].str[0:2] # adding a column to include country abbreviations
+    #  converting the columns that will no be stacked into a multi-index for the data frame
     df = df.set_index(keys=["ID", "Year", "FIPS 10-4"])
-    df = df.stack()
-    df = df.reset_index()
-    df = df.rename(columns = {"level_3"  : "Month" , 0 : "Temp"})
-    df["Month"] = df["Month"].str[5:].astype(int)
-    df["Temp"]  = df["Temp"] / 100
+    df = df.stack()                 # stacking" all of the data values on top of each other
+    df = df.reset_index()           # reseting the index of the dataframe
+    df = df.rename(columns = {"level_3"  : "Month" , 0 : "Temp"}) #renaming certain columns
+    df["Month"] = df["Month"].str[5:].astype(int) # extracting the month
+    df["Temp"]  = df["Temp"] / 100                # getting temperature in degrees C
     return(df)
 ```
 
 
 ```python
 df = prepare_df(df)
-df.to_sql("temperatures", conn, if_exists = "replace", index = False)
-
-df_iter = pd.read_csv("temps.csv", chunksize = 100000)
-for df in df_iter:
-    df = prepare_df(df)
-    df.to_sql("temperatures", conn, if_exists = "replace", index = False)
+countries = countries.rename(columns = {"Name" : "Country"}) # renaming column
 ```
 
     /opt/anaconda3/envs/PIC16B/lib/python3.8/site-packages/pandas/core/generic.py:2872: UserWarning: The spaces in these column names will not be changed. In pandas versions < 0.14, spaces were converted to underscores.
@@ -74,11 +318,16 @@ for df in df_iter:
 
 
 ```python
+# writing to the specified table in the database
+df.to_sql("temperatures", conn, if_exists = "append", index = False)
 stations.to_sql("stations", conn, if_exists = "replace", index = False)
 countries.to_sql("countries", conn, if_exists = "replace", index = False)
 ```
 
 ## `Queries`
+    Now we have a database containing three tables named 'temperatures', 
+    'stations', and 'countries'. Let's take a look at the database to 
+    confirm.
 
 
 ```python
@@ -93,16 +342,33 @@ print(cursor.fetchall())
 
 ```python
 def query_climate_database(country, year_begin, year_end, month):
+    """
+     Returns a Pandas dataframe of temperature readings for the specified country, 
+     in the specified date range, in the specified month of the year
+     
+     Parameters:
+         Each parameter is querying columns from the tables in the database
+             country 
+             year_begin
+             year_end
+             month
+    """
+    
     cmd = \
     """
-    SELECT S.name, S.latitude, S.longitude, C.name, T.year, T.month, T.temp
+    SELECT S.name, S.latitude, S.longitude, C.country, T.year, T.month, T.temp
     FROM temperatures T
     INNER JOIN stations S ON T.id = S.id 
     INNER JOIN countries C ON T.[FIPS 10-4] = C.[FIPS 10-4]
-    WHERE C.name = country AND (T.year >= year_begin OR T.year <= year_end) AND T.month = month
+    WHERE C.country = '%s' AND (T.year >= '%s' OR T.year <= '%s') AND T.month = '%s'
     """
+    # SELECT: controls which column(s) will be returned
+    # FROM: which table to return columns from
+    # INNER JOIN: incorporating relational information into our query
+    # WHERE: only rows in which this criterion is satisfied will be returned
     
-    df = pd.read_sql_query(cmd, conn)
+    # obtain the specified columns into a dataframe
+    df = pd.read_sql_query(cmd %(country, year_begin, year_end, month), conn)
     
     return df
 ```
@@ -117,101 +383,336 @@ query_climate_database(country = "India",
 ```
 
 
-    ---------------------------------------------------------------------------
-
-    OperationalError                          Traceback (most recent call last)
-
-    /opt/anaconda3/envs/PIC16B/lib/python3.8/site-packages/pandas/io/sql.py in execute(self, *args, **kwargs)
-       2055         try:
-    -> 2056             cur.execute(*args, **kwargs)
-       2057             return cur
 
 
-    OperationalError: no such column: country
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
 
-    
-    The above exception was the direct cause of the following exception:
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
 
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>NAME</th>
+      <th>LATITUDE</th>
+      <th>LONGITUDE</th>
+      <th>Country</th>
+      <th>Year</th>
+      <th>Month</th>
+      <th>Temp</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>PBO_ANANTAPUR</td>
+      <td>14.5830</td>
+      <td>77.6330</td>
+      <td>India</td>
+      <td>2011</td>
+      <td>1</td>
+      <td>23.48</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>PBO_ANANTAPUR</td>
+      <td>14.5830</td>
+      <td>77.6330</td>
+      <td>India</td>
+      <td>2013</td>
+      <td>1</td>
+      <td>25.20</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>PBO_ANANTAPUR</td>
+      <td>14.5830</td>
+      <td>77.6330</td>
+      <td>India</td>
+      <td>2014</td>
+      <td>1</td>
+      <td>24.96</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>PBO_ANANTAPUR</td>
+      <td>14.5830</td>
+      <td>77.6330</td>
+      <td>India</td>
+      <td>2015</td>
+      <td>1</td>
+      <td>24.90</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>PBO_ANANTAPUR</td>
+      <td>14.5830</td>
+      <td>77.6330</td>
+      <td>India</td>
+      <td>2016</td>
+      <td>1</td>
+      <td>24.50</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>13192</th>
+      <td>DIU</td>
+      <td>20.7167</td>
+      <td>70.9167</td>
+      <td>India</td>
+      <td>1955</td>
+      <td>1</td>
+      <td>22.75</td>
+    </tr>
+    <tr>
+      <th>13193</th>
+      <td>DIU</td>
+      <td>20.7167</td>
+      <td>70.9167</td>
+      <td>India</td>
+      <td>1956</td>
+      <td>1</td>
+      <td>22.50</td>
+    </tr>
+    <tr>
+      <th>13194</th>
+      <td>DIU</td>
+      <td>20.7167</td>
+      <td>70.9167</td>
+      <td>India</td>
+      <td>1957</td>
+      <td>1</td>
+      <td>22.20</td>
+    </tr>
+    <tr>
+      <th>13195</th>
+      <td>DIU</td>
+      <td>20.7167</td>
+      <td>70.9167</td>
+      <td>India</td>
+      <td>1958</td>
+      <td>1</td>
+      <td>22.85</td>
+    </tr>
+    <tr>
+      <th>13196</th>
+      <td>DIU</td>
+      <td>20.7167</td>
+      <td>70.9167</td>
+      <td>India</td>
+      <td>1960</td>
+      <td>1</td>
+      <td>21.70</td>
+    </tr>
+  </tbody>
+</table>
+<p>13197 rows × 7 columns</p>
+</div>
 
-    DatabaseError                             Traceback (most recent call last)
-
-    /var/folders/q6/10s9dnt11c37jlcj336y9r9h0000gn/T/ipykernel_51741/3060603923.py in <module>
-          1 #test function
-    ----> 2 query_climate_database(country = "India", 
-          3                        year_begin = 1980,
-          4                        year_end = 2020,
-          5                        month = 1)
-
-
-    /var/folders/q6/10s9dnt11c37jlcj336y9r9h0000gn/T/ipykernel_51741/3688955949.py in query_climate_database(country, year_begin, year_end, month)
-          9     """
-         10 
-    ---> 11     df = pd.read_sql_query(cmd, conn)
-         12 
-         13     return df
-
-
-    /opt/anaconda3/envs/PIC16B/lib/python3.8/site-packages/pandas/io/sql.py in read_sql_query(sql, con, index_col, coerce_float, params, parse_dates, chunksize, dtype)
-        434     """
-        435     pandas_sql = pandasSQL_builder(con)
-    --> 436     return pandas_sql.read_query(
-        437         sql,
-        438         index_col=index_col,
-
-
-    /opt/anaconda3/envs/PIC16B/lib/python3.8/site-packages/pandas/io/sql.py in read_query(self, sql, index_col, coerce_float, params, parse_dates, chunksize, dtype)
-       2114 
-       2115         args = _convert_params(sql, params)
-    -> 2116         cursor = self.execute(*args)
-       2117         columns = [col_desc[0] for col_desc in cursor.description]
-       2118 
-
-
-    /opt/anaconda3/envs/PIC16B/lib/python3.8/site-packages/pandas/io/sql.py in execute(self, *args, **kwargs)
-       2066 
-       2067             ex = DatabaseError(f"Execution failed on sql '{args[0]}': {exc}")
-    -> 2068             raise ex from exc
-       2069 
-       2070     @staticmethod
-
-
-    DatabaseError: Execution failed on sql '
-        SELECT S.name, S.latitude, S.longitude, C.name, T.year, T.month, T.temp
-        FROM temperatures T
-        INNER JOIN stations S ON T.id = S.id 
-        INNER JOIN countries C ON T.[FIPS 10-4] = C.[FIPS 10-4]
-        WHERE C.name = country AND (T.year >= year_begin OR T.year <= year_end) AND T.month = month
-        ': no such column: country
 
 
 ## `Geographic Data Visualization`
 
 
 ```python
+df = query_climate_database(country = "India", 
+                           year_begin = 1980, 
+                           year_end = 2020,
+                           month = 1)
+
+def coef(data_group):
+    x = data_group[["Year"]]
+    y = data_group["Temp"]
+    LR = LinearRegression()
+    LR.fit(x, y)
+    return LR.coef_[0]
+
+coefs = df.groupby(["NAME", "LATITUDE", "LONGITUDE", "Country", "Month"]).apply(coef)
+
+coefs = coefs.reset_index()
+coefs
+
+```
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>NAME</th>
+      <th>LATITUDE</th>
+      <th>LONGITUDE</th>
+      <th>Country</th>
+      <th>Month</th>
+      <th>0</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>AGARTALA</td>
+      <td>23.8830</td>
+      <td>91.2500</td>
+      <td>India</td>
+      <td>1</td>
+      <td>0.009995</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>AGRA</td>
+      <td>27.1667</td>
+      <td>78.0333</td>
+      <td>India</td>
+      <td>1</td>
+      <td>-0.001788</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>AHMADABAD</td>
+      <td>23.0670</td>
+      <td>72.6330</td>
+      <td>India</td>
+      <td>1</td>
+      <td>-0.016162</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>AJMERE</td>
+      <td>26.4700</td>
+      <td>74.6200</td>
+      <td>India</td>
+      <td>1</td>
+      <td>-0.005517</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>AKOLA</td>
+      <td>20.7000</td>
+      <td>77.0330</td>
+      <td>India</td>
+      <td>1</td>
+      <td>0.001553</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>113</th>
+      <td>UDAIPUR_DABOK</td>
+      <td>24.6170</td>
+      <td>73.8830</td>
+      <td>India</td>
+      <td>1</td>
+      <td>0.156358</td>
+    </tr>
+    <tr>
+      <th>114</th>
+      <td>VARANASI_BABATPUR</td>
+      <td>25.4500</td>
+      <td>82.8670</td>
+      <td>India</td>
+      <td>1</td>
+      <td>0.023353</td>
+    </tr>
+    <tr>
+      <th>115</th>
+      <td>VERAVAL</td>
+      <td>20.9000</td>
+      <td>70.3670</td>
+      <td>India</td>
+      <td>1</td>
+      <td>0.002563</td>
+    </tr>
+    <tr>
+      <th>116</th>
+      <td>VISHAKHAPATNAM</td>
+      <td>17.7170</td>
+      <td>83.2330</td>
+      <td>India</td>
+      <td>1</td>
+      <td>-0.004859</td>
+    </tr>
+    <tr>
+      <th>117</th>
+      <td>VIZAGAPATAM</td>
+      <td>17.7000</td>
+      <td>83.3700</td>
+      <td>India</td>
+      <td>1</td>
+      <td>-0.011871</td>
+    </tr>
+  </tbody>
+</table>
+<p>118 rows × 6 columns</p>
+</div>
+
+
+
+
+```python
 def temperature_coefficient_plot(country, year_begin, year_end, month, min_obs, **kwargs):
 
+    df = query_climate_database(country, year_begin, year_end, month)
+    
     def coef(data_group):
-        x = data_group[["Year"]] # 2 brackets because X should be a df
-        y = data_group["Temp"]   # 1 bracket because y should be a series
+        x = data_group[["Year"]]
+        y = data_group["Temp"]
         LR = LinearRegression()
         LR.fit(x, y)
         return LR.coef_[0]
     
-    coefs = df.groupby(["NAME", "Month"]).apply(coef)
-
+    coefs = df.groupby(["NAME", "LATITUDE", "LONGITUDE", "Country", "Month"]).apply(coef)
+    
     coefs = coefs.reset_index()
     
-    coords = pd.DataFrame({
-    "lon" : [-118.44300984639733], 
-    "lat" : [34.0696449790177]
-    })
-    
-    fig = px.scatter_mapbox(coords, 
-                        lat = "lat",
-                        lon = "lon",
-                        zoom = 15,
+    fig = px.scatter_mapbox(coefs, 
+                        lat = "LATITUDE",
+                        lon = "LONGITUDE",
+                        hover_name = "NAME",
+                        color = "NAME",
                         height = 300,
-                        mapbox_style="open-street-map")
+                        **kwargs)
 
     fig.update_layout(margin={"r":0,"t":0,"l":0,"b":0})
 ```
@@ -225,8 +726,8 @@ color_map = px.colors.diverging.RdGy_r # choose a colormap
 fig = temperature_coefficient_plot("India", 1980, 2020, 1, 
                                    min_obs = 10,
                                    zoom = 2,
-                                   mapbox_style="carto-positron",
-                                   color_continuous_scale=color_map)
+                                   mapbox_style = "carto-positron",
+                                   color_continuous_scale = color_map)
 
 fig.show()
 ```
@@ -234,50 +735,24 @@ fig.show()
 
     ---------------------------------------------------------------------------
 
-    KeyError                                  Traceback (most recent call last)
+    AttributeError                            Traceback (most recent call last)
 
-    /var/folders/q6/10s9dnt11c37jlcj336y9r9h0000gn/T/ipykernel_51741/482935465.py in <module>
-          3 color_map = px.colors.diverging.RdGy_r # choose a colormap
-          4 
-    ----> 5 fig = temperature_coefficient_plot("India", 1980, 2020, 1, 
-          6                                    min_obs = 10,
-          7                                    zoom = 2,
+    /var/folders/q6/10s9dnt11c37jlcj336y9r9h0000gn/T/ipykernel_65299/1746835992.py in <module>
+          9                                    color_continuous_scale = color_map)
+         10 
+    ---> 11 fig.show()
+    
 
-
-    /var/folders/q6/10s9dnt11c37jlcj336y9r9h0000gn/T/ipykernel_51741/3270307080.py in temperature_coefficient_plot(country, year_begin, year_end, month, min_obs, **kwargs)
-         10         return LR.coef_[0]
-         11 
-    ---> 12     coefs = df.groupby(["NAME", "Month"]).apply(coef)
-         13 
-         14     coefs = coefs.reset_index()
+    AttributeError: 'NoneType' object has no attribute 'show'
 
 
-    /opt/anaconda3/envs/PIC16B/lib/python3.8/site-packages/pandas/core/frame.py in groupby(self, by, axis, level, as_index, sort, group_keys, squeeze, observed, dropna)
-       7629         # error: Argument "squeeze" to "DataFrameGroupBy" has incompatible type
-       7630         # "Union[bool, NoDefault]"; expected "bool"
-    -> 7631         return DataFrameGroupBy(
-       7632             obj=self,
-       7633             keys=by,
 
+```python
+from plotly.io import write_html
+write_html(fig, "geo_scatter.html")
+```
 
-    /opt/anaconda3/envs/PIC16B/lib/python3.8/site-packages/pandas/core/groupby/groupby.py in __init__(self, obj, keys, axis, level, grouper, exclusions, selection, as_index, sort, group_keys, squeeze, observed, mutated, dropna)
-        887             from pandas.core.groupby.grouper import get_grouper
-        888 
-    --> 889             grouper, exclusions, obj = get_grouper(
-        890                 obj,
-        891                 keys,
-
-
-    /opt/anaconda3/envs/PIC16B/lib/python3.8/site-packages/pandas/core/groupby/grouper.py in get_grouper(obj, key, axis, level, sort, observed, mutated, validate, dropna)
-        860                 in_axis, level, gpr = False, gpr, None
-        861             else:
-    --> 862                 raise KeyError(gpr)
-        863         elif isinstance(gpr, Grouper) and gpr.key is not None:
-        864             # Add key to exclusions
-
-
-    KeyError: 'NAME'
-
+    It's good practice to close your database connection once you're done using it.
 
 
 ```python
